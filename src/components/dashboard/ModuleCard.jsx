@@ -13,12 +13,12 @@ export default function ModuleCard({ title, description, image, icon, features, 
     const Icon = iconMap[icon] || Grid;
 
     return (
-        <div className={`group relative bg-white rounded-2xl shadow-sm transition-all duration-300 overflow-hidden border border-slate-100 flex flex-col h-full ${isExpired ? 'opacity-75 grayscale-[0.5]' : 'hover:shadow-xl'}`}>
+        <div className={`group relative bg-white rounded-[2.5rem] shadow-sm transition-all duration-300 overflow-hidden border border-slate-100 flex flex-col h-full ${isExpired ? 'opacity-75 grayscale-[0.5]' : 'hover:shadow-xl hover:-translate-y-2'}`}>
             <div className="absolute inset-0 bg-gradient-to-br from-transparent to-violet-500/5 opacity-0 group-hover:opacity-100 transition-opacity" />
 
             {/* Image Header */}
             <div className="relative h-48 overflow-hidden">
-                <div className="absolute inset-0 bg-slate-900/10 group-hover:bg-slate-900/0 transition-colors z-10" />
+                <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/60 z-10"></div>
                 <img
                     src={image}
                     alt={title}
@@ -37,15 +37,15 @@ export default function ModuleCard({ title, description, image, icon, features, 
                 )}
             </div>
 
-            <div className="p-6 flex-1 flex flex-col">
-                <h3 className="text-xl font-bold text-slate-900 mb-2 group-hover:text-violet-600 transition-colors">
+            <div className="p-10 flex-1 flex flex-col">
+                <h3 className="text-2xl font-bold mb-4 text-slate-900 group-hover:text-violet-600 transition-colors">
                     {title}
                 </h3>
-                <p className="text-slate-600 text-sm mb-4 line-clamp-2">
+                <p className="text-slate-500 text-sm leading-relaxed mb-8 font-medium line-clamp-2">
                     {description}
                 </p>
 
-                <div className="space-y-2 mb-6 flex-1">
+                <div className="space-y-2 mb-8 flex-1">
                     {features.map((feature, idx) => (
                         <div key={idx} className="flex items-center gap-2 text-xs text-slate-500">
                             <div className="w-1.5 h-1.5 rounded-full bg-violet-400" />
@@ -57,18 +57,16 @@ export default function ModuleCard({ title, description, image, icon, features, 
                 {link && !isExpired ? (
                     <Link
                         to={link}
-                        className="w-full py-3.5 px-4 bg-violet-600 hover:bg-violet-700 text-white rounded-xl font-bold text-sm transition-all duration-300 flex items-center justify-center gap-2 group/btn shadow-lg shadow-violet-500/20 hover:shadow-violet-500/40 hover:-translate-y-0.5 active:scale-[0.98]"
+                        className="block w-full py-4 rounded-2xl bg-slate-900 text-white font-bold text-sm transition hover:bg-violet-600 text-center"
                     >
                         Acessar Módulo
-                        <ArrowRight className="w-4 h-4 transform group-hover/btn:translate-x-1 transition-transform" />
                     </Link>
                 ) : (
                     <button
-                        className="w-full py-3.5 px-4 bg-slate-900 text-white rounded-xl font-bold text-sm transition-all flex items-center justify-center gap-2 shadow-lg shadow-slate-900/20"
+                        className="w-full py-4 rounded-2xl bg-slate-900 text-white font-bold text-sm transition hover:bg-violet-600 text-center"
                         onClick={() => !link ? alert('Em breve!') : window.location.href = '#suporte'}
                     >
                         {isExpired ? 'Assinar Agora' : 'Em Breve'}
-                        <ArrowRight className="w-4 h-4" />
                     </button>
                 )}
             </div>
