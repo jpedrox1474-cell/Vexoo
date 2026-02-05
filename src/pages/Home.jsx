@@ -1,0 +1,377 @@
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { createPageUrl } from '../utils';
+import {
+  LayoutDashboard, Calendar, Users, Settings, Plus, Search, Save, Trash2,
+  ChevronRight, TrendingUp, DollarSign, Package, Download, CheckCircle2,
+  BrainCircuit, Maximize2, Calculator, Edit, Eye, Printer, Copy, Grid,
+  Square, Ruler, ShoppingCart, AlertCircle, Filter, Mail, Phone, MapPin,
+  Percent, BarChart3, FileSpreadsheet, Wrench, Box as BoxIcon, Layers,
+  Menu, X, LogOut, Bell, Star, Scissors, PawPrint, Dumbbell, Trophy,
+  Target, Instagram, Youtube, Clock, BedDouble, Activity, UserCheck,
+  Truck, HeartPulse, Syringe, FileText, CreditCard, Send, UserPlus,
+  ClipboardList, ArrowRight, Home as HomeIcon, Zap, Shield, Sparkles, Lock, User,
+  Globe, Link2, Palette, Layout, Code, ExternalLink, Gift, MessageSquare,
+  Stethoscope, CheckSquare, ListPlus, Flame, Facebook, Award, Rocket,
+  Laptop, Smartphone, ArrowLeft, PlayCircle, Video, ChevronLeft
+} from 'lucide-react';
+
+const GlobalStyles = () => (
+  <style>{`
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;600;700;800&display=swap');
+    
+    :root {
+      --brand-primary: #6366f1;
+      --brand-dark: #0f172a;
+      --brand-accent: #a855f7;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #fafafa;
+      color: #0f172a;
+    }
+
+    h1, h2, h3, h4, h5, h6, .brand-font {
+      font-family: 'Outfit', sans-serif;
+    }
+
+    .glass-nav {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: saturate(180%) blur(20px);
+    }
+
+    .hero-section {
+      background-image: linear-gradient(to right, rgba(15, 23, 42, 0.95) 30%, rgba(15, 23, 42, 0.4) 100%), 
+                        url('https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1600&q=80');
+      background-size: cover;
+      background-position: center;
+    }
+
+    .card-premium {
+      background: #ffffff;
+      border: 1px solid #eef2f6;
+      transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    }
+
+    .card-premium:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 30px 60px -12px rgba(15, 23, 42, 0.12);
+      border-color: var(--brand-primary);
+    }
+
+    .text-gradient {
+      background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+  `}</style>
+);
+
+export default function HomePage() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [selectedSector, setSelectedSector] = useState('Todos');
+
+  const sectors = ['Todos', 'Gastronomia', 'Bem-Estar', 'Saúde', 'Indústria', 'Varejo'];
+
+  const modulesData = [
+    {
+      id: 'barbearia',
+      title: "Barbearias & Estilo",
+      subtitle: "BarberPro System",
+      desc: "Gestão completa de barbearias, agendamento inteligente e programa de fidelidade.",
+      img: "/images/barberpro_hero.png",
+      color: "text-amber-600",
+      btnColor: "hover:bg-violet-600",
+      page: 'BarbeariaInfo',
+      sector: 'Bem-Estar'
+    },
+    {
+      id: 'academia',
+      title: "Lifestyle & Performance",
+      subtitle: "Elite Training",
+      desc: "Prescrição de treinos, bioimpedância e app exclusivo para alunos.",
+      img: "/images/elitetraining_hero.png",
+      color: "text-orange-600",
+      btnColor: "hover:bg-violet-600",
+      page: 'AcademiaInfo',
+      sector: 'Bem-Estar'
+    },
+    {
+      id: 'veterinaria',
+      title: "Vet Care & Health",
+      subtitle: "Medicina Veterinária",
+      desc: "Prontuários digitais, internação e controle de vacinas para clínicas.",
+      img: "/images/vetpro_hero.png",
+      color: "text-indigo-600",
+      btnColor: "hover:bg-violet-600",
+      page: 'VeterinariaInfo',
+      sector: 'Saúde'
+    },
+    {
+      id: 'vidracaria',
+      title: "Manutenção & Engenharia",
+      subtitle: "Vidraçaria Smart",
+      desc: "Cálculos de medidas, orçamentos em PDF e gestão de obras.",
+      img: "/images/vidrosmart_hero.png",
+      color: "text-purple-600",
+      btnColor: "hover:bg-indigo-600",
+      page: 'VidracariaInfo',
+      sector: 'Indústria'
+    }
+  ];
+
+  const filteredModules = selectedSector === 'Todos'
+    ? modulesData
+    : modulesData.filter(m => m.sector === selectedSector);
+
+  return (
+    <div className="min-h-screen bg-slate-50">
+      <GlobalStyles />
+
+      {/* Navbar */}
+      <nav className="glass-nav sticky top-0 z-50 border-b border-slate-200/60 px-6 py-4">
+        <div className="max-w-7xl mx-auto flex justify-between items-center">
+          <div className="flex items-center gap-2">
+            <div className="relative flex items-center justify-center w-10 h-10 bg-slate-900 rounded-lg overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-tr from-indigo-600 to-purple-500 opacity-80"></div>
+              <span className="relative text-white font-black text-xl italic">V</span>
+            </div>
+            <span className="brand-font text-2xl font-extrabold tracking-tight text-slate-900 ml-1">VEXO</span>
+          </div>
+
+          <div className="hidden md:flex items-center gap-10 font-medium text-[14px] text-slate-600 uppercase tracking-widest">
+            <button onClick={() => document.getElementById('solucoes')?.scrollIntoView({ behavior: 'smooth' })} className="hover:text-indigo-600 transition">Soluções</button>
+            <button onClick={() => document.getElementById('sobre')?.scrollIntoView({ behavior: 'smooth' })} className="hover:text-indigo-600 transition">Sobre</button>
+          </div>
+
+          <div className="flex items-center gap-6">
+            <Link to={createPageUrl('Login')} className="hidden sm:block text-sm font-bold text-slate-700 hover:text-indigo-600">
+              Login
+            </Link>
+            <Link to={createPageUrl('Register')} className="px-6 py-3 rounded-full font-bold text-sm bg-gradient-to-r from-indigo-500 to-purple-500 hover:brightness-110 text-white shadow-lg shadow-indigo-500/30 transition-all duration-300">
+              Teste Grátis
+            </Link>
+          </div>
+
+          <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="md:hidden text-slate-900">
+            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          </button>
+        </div>
+
+        {mobileMenuOpen && (
+          <div className="md:hidden mt-4 pb-4 space-y-3">
+            <Link to={createPageUrl('Login')} className="block text-slate-700 hover:text-indigo-600">
+              Login
+            </Link>
+            <Link to={createPageUrl('Register')} className="block px-6 py-3 text-center rounded-full font-bold text-sm bg-gradient-to-r from-indigo-500 to-purple-500 text-white">
+              Teste Grátis
+            </Link>
+          </div>
+        )}
+      </nav>
+
+      {/* Hero Section */}
+      <section className="hero-section min-h-[85vh] flex items-center px-6 py-20 relative overflow-hidden">
+        <div className="max-w-7xl mx-auto w-full relative z-10">
+          <div className="max-w-3xl">
+            <div className="inline-flex items-center gap-3 bg-white/10 backdrop-blur-md border border-white/20 px-4 py-2 rounded-full mb-8">
+              <span className="flex h-2 w-2 rounded-full bg-indigo-400 animate-pulse"></span>
+              <span className="text-white/80 text-[11px] font-bold uppercase tracking-[0.2em]">O Futuro da Gestão Profissional</span>
+            </div>
+            <h1 className="text-5xl md:text-7xl font-extrabold text-white mb-8 leading-tight tracking-tight">
+              A infraestrutura que seu <span className="text-gradient">negócio merece.</span>
+            </h1>
+            <p className="text-xl text-slate-300 mb-12 max-w-xl leading-relaxed font-light">
+              Esqueça softwares genéricos. A <strong>VEXO</strong> oferece ecossistemas verticais projetados especificamente para a anatomia de cada profissão.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-5">
+              <a href="#solucoes" className="bg-gradient-to-r from-indigo-500 to-purple-500 hover:brightness-110 text-white px-10 py-5 rounded-full font-bold text-lg shadow-lg hover:shadow-indigo-500/40 transition-all duration-300 hover:-translate-y-1 text-center">
+                Encontrar minha área
+              </a>
+              <Link to={createPageUrl('Register')} className="bg-white/5 hover:bg-white/10 backdrop-blur-sm border border-white/20 text-white px-10 py-5 rounded-full font-bold text-lg transition-all duration-300 text-center">
+                Experimentar Agora
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Filter Bar */}
+      <section className="bg-white py-12 px-6 border-b border-slate-100">
+        <div className="max-w-7xl mx-auto overflow-x-auto">
+          <div className="flex items-center justify-between gap-8 min-w-max">
+            <h2 className="brand-font text-sm font-black text-slate-400 uppercase tracking-[0.3em]">Navegar por Setor</h2>
+            <div className="flex gap-3">
+              {sectors.map(sector => (
+                <button
+                  key={sector}
+                  onClick={() => setSelectedSector(sector)}
+                  className={`px-6 py-2.5 rounded-full text-xs font-bold uppercase tracking-widest transition-all ${selectedSector === sector
+                    ? 'bg-violet-600 text-white shadow-md shadow-violet-500/20'
+                    : 'border border-slate-200 text-slate-600 hover:bg-violet-600 hover:text-white hover:border-violet-600'
+                    }`}
+                >
+                  {sector}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Main Grid */}
+      <section id="solucoes" className="px-6 py-24 max-w-7xl mx-auto bg-slate-50">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+          {filteredModules.map((item, idx) => (
+            <div key={idx} className="card-premium rounded-[2.5rem] overflow-hidden group">
+              <div className="h-64 relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/60 z-10"></div>
+                <img src={item.img} alt={item.title} className="w-full h-full object-cover transition duration-700 group-hover:scale-110" />
+              </div>
+              <div className="p-10">
+                <div className={`${item.color} font-bold text-[10px] uppercase tracking-widest mb-4 italic`}>{item.subtitle}</div>
+                <h3 className="text-2xl font-bold mb-4 text-slate-900">{item.title}</h3>
+                <p className="text-slate-500 text-sm leading-relaxed mb-8 font-medium">{item.desc}</p>
+                <Link to={createPageUrl(item.page)} className={`block w-full py-4 rounded-2xl bg-slate-900 text-white font-bold text-sm transition ${item.btnColor} text-center`}>
+                  Acessar Módulo
+                </Link>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Marquee */}
+      <section className="py-20 bg-slate-50 flex flex-col items-center">
+        <p className="text-xs font-black text-slate-400 uppercase tracking-[0.4em] mb-12">Empresas que confiam na VEXO</p>
+        <div className="flex flex-wrap justify-center gap-12 opacity-30 grayscale px-6">
+          <span className="text-3xl font-black text-slate-800">GOOGLE</span>
+          <span className="text-3xl font-black text-slate-800">AMAZON</span>
+          <span className="text-3xl font-black text-slate-800">SPOTIFY</span>
+          <span className="text-3xl font-black text-slate-800">UBER</span>
+        </div>
+      </section>
+
+      {/* Sobre Section */}
+      <section id="sobre" className="py-24 px-6 bg-white">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            {/* Image */}
+            <div className="relative group">
+              <div className="absolute -inset-4 bg-gradient-to-r from-indigo-500 to-purple-500 opacity-20 blur-2xl rounded-[3rem] group-hover:opacity-30 transition duration-500"></div>
+              <img
+                src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80"
+                alt="Equipe VEXO"
+                className="relative rounded-[2.5rem] shadow-2xl w-full object-cover h-[500px]"
+              />
+            </div>
+
+            {/* Content */}
+            <div>
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-indigo-50 border border-indigo-100 text-indigo-600 text-xs font-bold uppercase tracking-widest mb-6">
+                <Sparkles size={14} />
+                Nossa Missão
+              </div>
+
+              <h2 className="text-4xl md:text-5xl font-extrabold text-slate-900 mb-6">Sobre a VEXO</h2>
+
+              <p className="text-xl text-slate-600 mb-6 leading-relaxed">
+                Somos uma plataforma de gestão vertical que entende as necessidades específicas de cada profissão.
+                Diferente de softwares genéricos, criamos ecossistemas completos adaptados à anatomia do seu negócio.
+              </p>
+
+              <p className="text-lg text-slate-500 mb-8 leading-relaxed">
+                Fundada por especialistas em tecnologia e gestão empresarial, a VEXO nasceu da frustração com
+                sistemas one-size-fits-all que prometem tudo mas não entregam nada específico. Decidimos criar
+                algo diferente: módulos verticais que realmente entendem seu setor.
+              </p>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 bg-indigo-100 rounded-xl flex items-center justify-center shrink-0">
+                    <Zap className="text-indigo-600" size={24} />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-bold text-slate-900 mb-1">Tecnologia Proprietária</h3>
+                    <p className="text-sm text-slate-600">Desenvolvemos cada módulo pensando nos desafios reais da sua área.</p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center shrink-0">
+                    <Shield className="text-purple-600" size={24} />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-bold text-slate-900 mb-1">Segurança Total</h3>
+                    <p className="text-sm text-slate-600">Seus dados protegidos com criptografia de ponta a ponta.</p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center shrink-0">
+                    <TrendingUp className="text-green-600" size={24} />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-bold text-slate-900 mb-1">Resultados Comprovados</h3>
+                    <p className="text-sm text-slate-600">Mais de 5.000 profissionais transformaram seus negócios.</p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center shrink-0">
+                    <Users className="text-orange-600" size={24} />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-bold text-slate-900 mb-1">Suporte Dedicado</h3>
+                    <p className="text-sm text-slate-600">Equipe especializada disponível 24/7 para ajudar você.</p>
+                  </div>
+                </div>
+              </div>
+
+              <Link to={createPageUrl('Register')} className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold rounded-xl hover:brightness-110 transition-all shadow-lg shadow-indigo-500/20">
+                Começar Agora
+                <ArrowRight size={18} />
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="bg-slate-950 text-white pt-24 pb-12 px-6">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-16 mb-20">
+            <div className="md:col-span-2">
+              <div className="flex items-center gap-2 mb-8">
+                <div className="w-8 h-8 bg-white text-slate-950 rounded flex items-center justify-center font-black italic">V</div>
+                <span className="brand-font text-2xl font-extrabold tracking-tight">VEXO</span>
+              </div>
+              <p className="text-slate-400 max-w-sm text-lg leading-relaxed">
+                Redefinindo os limites da produtividade profissional através de tecnologia proprietária e design focado no usuário.
+              </p>
+            </div>
+            <div>
+              <h4 className="font-bold mb-6 uppercase text-xs tracking-widest text-indigo-400">Plataforma</h4>
+              <ul className="space-y-4 text-slate-400 text-sm font-medium">
+                <li><button className="hover:text-white transition">Como Funciona</button></li>
+                <li><button className="hover:text-white transition">Novos Setores</button></li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-bold mb-6 uppercase text-xs tracking-widest text-indigo-400">Contato</h4>
+              <ul className="space-y-4 text-slate-400 text-sm font-medium">
+                <li><button className="hover:text-white transition">Suporte 24/7</button></li>
+              </ul>
+            </div>
+          </div>
+          <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-6">
+            <p className="text-slate-500 text-xs tracking-widest uppercase">© 2026 VEXO GLOBAL SYSTEMS. Todos os direitos reservados.</p>
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
+}
