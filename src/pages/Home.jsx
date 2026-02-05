@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from '../utils';
+import NewsletterSignup from '../components/NewsletterSignup';
 import {
   LayoutDashboard, Calendar, Users, Settings, Plus, Search, Save, Trash2,
   ChevronRight, TrendingUp, DollarSign, Package, Download, CheckCircle2,
@@ -15,6 +16,7 @@ import {
   Stethoscope, CheckSquare, ListPlus, Flame, Facebook, Award, Rocket,
   Laptop, Smartphone, ArrowLeft, PlayCircle, Video, ChevronLeft
 } from 'lucide-react';
+
 
 const GlobalStyles = () => (
   <style>{`
@@ -336,6 +338,40 @@ export default function HomePage() {
                 <ArrowRight size={18} />
               </Link>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Newsletter Section */}
+      <section className="py-24 px-6 bg-gradient-to-br from-slate-900 via-indigo-950 to-purple-950 relative overflow-hidden">
+        {/* Background decorations */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-20 left-20 w-72 h-72 bg-indigo-500 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-20 right-20 w-96 h-96 bg-purple-500 rounded-full blur-3xl"></div>
+        </div>
+
+        <div className="max-w-7xl mx-auto relative z-10">
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-white text-xs font-bold uppercase tracking-widest mb-6">
+              <Mail size={14} />
+              Fique por Dentro
+            </div>
+            <h2 className="text-4xl md:text-5xl font-extrabold text-white mb-6">
+              Junte-se à Nossa Comunidade
+            </h2>
+            <p className="text-xl text-slate-300 max-w-2xl mx-auto leading-relaxed">
+              Receba insights exclusivos, novidades sobre novos módulos e dicas para otimizar seu negócio.
+            </p>
+          </div>
+
+          <div className="flex justify-center">
+            <NewsletterSignup />
+          </div>
+
+          <div className="mt-16 text-center">
+            <p className="text-slate-400 text-sm">
+              📊 Mais de <span className="text-white font-bold">12.000 profissionais</span> já fazem parte da nossa lista
+            </p>
           </div>
         </div>
       </section>

@@ -8,6 +8,7 @@ import {
     createUserWithEmailAndPassword, signInWithEmailAndPassword,
     updateProfile
 } from 'firebase/auth';
+import { getFirestore, collection, addDoc, query, where, getDocs } from 'firebase/firestore';
 
 // Configuração do Firebase (substitua com suas credenciais)
 const apiKey = import.meta.env.VITE_FIREBASE_API_KEY || "demo-api-key";
@@ -25,7 +26,9 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
+export const db = getFirestore(app);
 export const googleProvider = new GoogleAuthProvider();
+
 
 // Register with Email/Password
 export const signUpWithEmail = async (email, password, fullName) => {
@@ -106,6 +109,45 @@ export const firebaseSignOut = async () => {
         await signOut(auth);
     } catch (error) {
         console.error('Sign out error:', error);
+        throw error;
+    }
+};
+
+// Newsletter - Add email to Firestore
+export const addEmailToNewsletter = async (email) => {
+    if (isPlaceholderKey) {
+        console.warn("Using MOCK Newsletter because Firebase API key is not configured.");
+        await new Promise(r => setTimeout(r, 800));
+        return {
+            success: true,
+            message: "Email adicionado com sucesso (modo demo)!",
+            mock: true
+        };
+    }
+
+    try {
+        // Verificar se o email já existe
+        const newsletterRef = collection(db, 'newsletter');
+        const q = query(newsletterRef, where('email', '==', email));
+        const querySnapshot = await getDocs(q);
+
+        if (!querySnapshot.empty) {
+            throw new Error('Este email já está cadastrado na nossa lista!');
+        }
+
+        // Adicionar email ao Firestore
+        await addDoc(newsletterRef, {
+            email: email,
+            subscribedAt: new Date().toISOString(),
+            status: 'active'
+        });
+
+        return {
+            success: true,
+            message: 'Email adicionado com sucesso!'
+        };
+    } catch (error) {
+        console.error('Newsletter signup error:', error);
         throw error;
     }
 };
